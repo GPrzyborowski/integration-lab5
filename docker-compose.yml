@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres@sha256:c5bd032fb659503bf121faf5cea5894dcfece30286a3db59e3c060f3e9f60cb0
+    container_name: postgres-lab
+
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mydb
+
+    ports:
+      - '5432:5432'
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./backend/db/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
+
+  backend:
+    build: ./backend
+    container_name: backend-lab
+
+    ports:
+      - '5000:5000'
+
+    env_file:
+      - ./backend/.env
+
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-lab
+
+    ports:
+      - '80:80'
+
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
