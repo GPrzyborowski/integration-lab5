@@ -5,7 +5,6 @@ import loans from './routes/loans.routes'
 import books from './routes/books.routes'
 import users from './routes/users.routes'
 
-const PORT = 5000
 const app = express()
 
 app.use(cors())
@@ -24,6 +23,4 @@ app.use('/api', loans)
 app.use('/api', books)
 app.use('/api', users)
 
-app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`)
-})
+export default app
