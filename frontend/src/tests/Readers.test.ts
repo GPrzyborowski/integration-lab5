@@ -7,7 +7,7 @@ globalThis.fetch = vi.fn(() =>
 		json: () =>
 			Promise.resolve([
 				{
-					id: 1,
+					id: '1',
 					name: 'Gabriel Przyborowski',
 					email: 'gprzyborowski@test.com',
 				},
