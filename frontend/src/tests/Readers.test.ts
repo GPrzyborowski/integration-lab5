@@ -13,7 +13,7 @@ globalThis.fetch = vi.fn(() =>
 				},
 			]),
 	}),
-) as any
+) as unknown as typeof fetch
 
 describe('readers page', async () => {
 	test('should render mocked user data', async () => {

@@ -19,7 +19,7 @@ globalThis.fetch = vi.fn(() =>
 				},
 			]),
 	}),
-) as any
+) as unknown as typeof fetch
 
 describe('loans page', async () => {
 	test('should render proper table headers', () => {
