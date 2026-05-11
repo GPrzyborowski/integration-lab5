@@ -10,7 +10,7 @@ describe('Endpoints', () => {
 	test('get /health should return "ok"', async () => {
 		const res = await request(app).get('/health')
 		expect(res.status).toBe(200)
-		expect(res.text).toBe('ok')
+		expect(res.text).toBe('Celowo zepsuty test w ramach zadania "Konfiguracja GitHub Actions CI')
 	})
 	test('GET /ready should return books', async () => {
 		;(pool.query as jest.Mock).mockResolvedValue({

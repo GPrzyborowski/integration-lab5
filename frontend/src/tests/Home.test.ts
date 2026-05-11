@@ -17,7 +17,7 @@ describe('main page', async () => {
 				},
 			},
 		})
-		expect(wrapper.text()).toContain('Simplified library management system')
+		expect(wrapper.text()).toContain('Celowo zepsuty test w ramach zadania "Konfiguracja GitHub Actions CI"')
 	})
 	test('should render buttons', async () => {
 		const wrapper = mount(Home, {
