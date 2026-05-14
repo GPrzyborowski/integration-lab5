@@ -16,7 +16,7 @@ export const getBooks = async (req: Request, res: Response) => {
 	}
 }
 
-export const newBook = async (req: Request<{}, {}, Book>, res: Response) => {
+export const newBook = async (req: Request<object, object, Book>, res: Response) => {
 	const { title, author } = req.body
 	if (!title || !author || !title.trim() || !author.trim()) {
 		return res.status(400).json({ error: 'Missing data.' })

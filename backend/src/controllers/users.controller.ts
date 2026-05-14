@@ -16,7 +16,7 @@ export const getUsers = async (req: Request, res: Response) => {
 	}
 }
 
-export const newUser = async (req: Request<{}, {}, User>, res: Response) => {
+export const newUser = async (req: Request<object, object, User>, res: Response) => {
 	const { name, email } = req.body
 	if (!name || !email) {
 		return res.status(400).json({ message: 'Missing data.' })

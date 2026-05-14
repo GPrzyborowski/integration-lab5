@@ -19,7 +19,7 @@ export const getLoans = async (req: Request, res: Response) => {
 	}
 }
 
-export const returnLoan = async (req: Request<{ id: string }, {}, {}>, res: Response) => {
+export const returnLoan = async (req: Request<{ id: string }, object, object>, res: Response) => {
 	const { id } = req.params
 	if (!id) {
 		return res.status(400).json({ message: 'Missing data.' })
@@ -34,7 +34,7 @@ export const returnLoan = async (req: Request<{ id: string }, {}, {}>, res: Resp
 	}
 }
 
-export const newLoan = async (req: Request<{}, {}, Loan>, res: Response) => {
+export const newLoan = async (req: Request<object, object, Loan>, res: Response) => {
 	const { bookId, borrowerId } = req.body
 	if (!bookId || !borrowerId) {
 		return res.status(400).json({ message: 'Missing data.' })
