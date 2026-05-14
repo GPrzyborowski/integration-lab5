@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/health', (req, res) => {
-	res.send('ok')
+	res.status(200).send('ok')
 })
 
 app.use('/ready', async (req, res) => {
