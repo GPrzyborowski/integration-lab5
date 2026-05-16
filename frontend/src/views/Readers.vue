@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import Header from '../components/Header.vue'
 import ReaderRecord from '../components/ReaderRecord.vue'
+import API_URL from '../api'
 
 type User = {
 	id: string
@@ -14,7 +15,7 @@ const name = ref('')
 const email = ref('')
 
 const getReaders = async () => {
-	const res = await fetch('http://localhost:5000/api/get-users')
+	const res = await fetch(`${API_URL}/api/get-users`)
 	const data = await res.json()
 	users.value = data
 }
@@ -22,7 +23,7 @@ const getReaders = async () => {
 const addReader = async (e: Event) => {
 	e.preventDefault()
 	try {
-		await fetch('http://localhost:5000/api/new-user', {
+		await fetch(`${API_URL}/api/new-user`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
