@@ -7,9 +7,11 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: backend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,9 +34,11 @@ jobs:
 
   frontend:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: frontend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -54,3 +58,35 @@ jobs:
 
       - name: Run tests
         run: npm test -- --run
+
+  deploy-backend:
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger backend deploy
+        run: curl "$RENDER_BACKEND_DEPLOY_HOOK"
+        env:
+          RENDER_BACKEND_DEPLOY_HOOK: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
+
+      - name: Wait for backend deployment
+        run: sleep 90
+
+      - name: Backend sanity check
+        run: curl -f "${{ secrets.BACKEND_URL }}/health"
+
+  deploy-frontend:
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger frontend deploy
+        run: curl "$RENDER_FRONTEND_DEPLOY_HOOK"
+        env:
+          RENDER_FRONTEND_DEPLOY_HOOK: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}
+
+      - name: Wait for frontend deployment
+        run: sleep 90
+
+      - name: Frontend sanity check
+        run: curl -f "${{ secrets.FRONTEND_URL }}"
