@@ -2,6 +2,7 @@
 import Header from '../components/Header.vue'
 import LoanRecord from '../components/LoanRecord.vue'
 import { onMounted, ref } from 'vue'
+import API_URL from '../api'
 
 type Loan = {
 	id: number
@@ -16,14 +17,14 @@ const borrowerId = ref<number>()
 const bookId = ref<number>()
 
 const renderLoans = async () => {
-	const res = await fetch('http://localhost:5000/api/get-loans')
+	const res = await fetch(`${API_URL}/api/get-loans`)
 	const data = await res.json()
 	loans.value = data
 }
 
 const returnLoan = async (id: number) => {
 	try {
-		await fetch(`http://localhost:5000/api/end-loan/${id}`, {
+		await fetch(`${API_URL}/api/end-loan/${id}`, {
 			method: 'PUT',
 		})
 		renderLoans()
@@ -35,7 +36,7 @@ const returnLoan = async (id: number) => {
 const newLoan = async (e: Event) => {
 	e.preventDefault()
 	try {
-		await fetch('http://localhost:5000/api/new-loan', {
+		await fetch(`${API_URL}/api/new-loan`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

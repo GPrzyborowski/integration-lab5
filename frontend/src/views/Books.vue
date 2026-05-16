@@ -7,12 +7,13 @@ type Book = {
 import Header from '../components/Header.vue'
 import Book from '../components/Book.vue'
 import { onMounted, ref } from 'vue'
+import API_URL from '../api'
 const books = ref<Book[]>([])
 const title = ref('')
 const author = ref('')
 
 const renderBooks = async () => {
-	const res = await fetch('http://localhost:5000/api/get-books')
+	const res = await fetch(`${API_URL}/api/get-books`)
 	const data = await res.json()
 	books.value = data
 }
@@ -22,7 +23,7 @@ onMounted(renderBooks)
 const addBookHandler = async (e: Event) => {
 	e.preventDefault()
 	try {
-		await fetch('http://localhost:5000/api/new-book', {
+		await fetch(`${API_URL}/api/new-book`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ const addBookHandler = async (e: Event) => {
 
 const deleteBookHandler = async (id: number) => {
 	try {
-		const res = await fetch(`http://localhost:5000/api/delete-book/${id}`, {
+		const res = await fetch(`${API_URL}/api/delete-book/${id}`, {
 			method: 'DELETE',
 		})
 		if (res.ok) {
