@@ -2,10 +2,100 @@
 
 ## Laboratorium 5: Automatyzacja CI/CD z GitHub Actions i wdrożenie PaaS
 
+# Publiczne adresy aplikacji
+
+## Frontend
+
+```text
+https://frontend-rdn1.onrender.com
+```
+
+## Backend API
+
+```text
+https://integration-lab5.onrender.com
+```
+
+## Health Check
+
+```text
+https://integration-lab5.onrender.com/health
+```
+
+---
+
+# Pipeline CI/CD
+
+Projekt wykorzystuje GitHub Actions do realizacji procesów CI/CD.
+
+Pipeline automatycznie wykonuje:
+- instalację zależności,
+- lintowanie kodu,
+- uruchamianie testów jednostkowych,
+- deployment aplikacji na Render.com,
+- sanity check endpointu `/health`.
+
+Workflow znajduje się w pliku:
+
+```text
+.github/workflows/main.yml
+```
+
+---
+
+# Testy jednostkowe
+
+## Backend
+
+Backend wykorzystuje:
+- `jest`
+- `ts-jest`
+- `supertest`
+
+Uruchamianie testów:
+
+```bash
+cd backend
+npm test
+```
+
+Uruchamianie lintera:
+
+```bash
+npm run lint
+```
+
+---
+
+## Frontend
+
+Frontend wykorzystuje:
+- `vitest`
+- `jsdom`
+
+Uruchamianie testów:
+
+```bash
+cd frontend
+npm test -- --run
+```
+
+Uruchamianie lintera:
+
+```bash
+npm run lint
+```
+
+---
+
+# Uruchamianie aplikacji lokalnie
+
 ## Wymagania
 
 - Docker Desktop
 - Git
+
+---
 
 ## Konfiguracja pliku `.env`
 
@@ -19,6 +109,8 @@ DB_PORT=5432
 DB_NAME=mydb
 ```
 
+---
+
 ## Uruchomienie aplikacji
 
 W głównym katalogu projektu należy wykonać polecenie:
@@ -27,16 +119,20 @@ W głównym katalogu projektu należy wykonać polecenie:
 docker compose up --build
 ```
 
-Po uruchomieniu aplikacja będzie dostępna pod adresami:
+---
+
+## Dostęp do aplikacji lokalnie
 
 ### Frontend
 
 ```text
-http://localhost:80
-```
-Lub po prostu:
-```text
 http://localhost
+```
+
+lub po prostu:
+
+```text
+http://localhost:80
 ```
 
 ### Backend
@@ -51,13 +147,9 @@ http://localhost:5000
 localhost:5432
 ```
 
-## Zatrzymywanie aplikacji
+---
 
-```bash
-docker compose down
-```
-
-## Migracje i seed bazy danych
+# Migracje i seed bazy danych
 
 Podczas pierwszego uruchomienia kontenera PostgreSQL automatycznie wykonywane są pliki:
 
@@ -66,25 +158,27 @@ backend/db/schema.sql
 backend/db/seed.sql
 ```
 
-Plik `schema.sql` tworzy strukturę tabel:
+Plik `schema.sql` tworzy tabele:
 - users
 - books
 - loans
 
-Plik `seed.sql` dodaje przykładowe dane do bazy.
+Plik `seed.sql` dodaje przykładowe rekordy do bazy danych.
 
-## Usuwanie wolumenów i pełny reset bazy danych
+---
 
-Aby usunąć kontenery, sieć oraz wolumeny:
+# Reset środowiska lokalnego
+
+Aby usunąć kontenery, sieci oraz wolumeny Docker:
 
 ```bash
 docker compose down -v
 ```
 
-Po ponownym uruchomieniu:
+Ponowne uruchomienie:
 
 ```bash
 docker compose up
 ```
 
-baza danych zostanie utworzona od nowa wraz z migracją i seedem.
+spowoduje ponowne utworzenie bazy danych wraz z migracją i seedem.
